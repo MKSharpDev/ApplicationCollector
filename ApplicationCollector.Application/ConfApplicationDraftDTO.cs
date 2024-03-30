@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCollector.Application
 {
-    public class ConfApplicationDTO
+    public class ConfApplicationDraftDTO
     {
         public Guid Id { get; set; }
 

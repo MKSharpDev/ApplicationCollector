@@ -7,6 +7,6 @@
         public string Description { get; set; }
         public string Outline { get; set; }
 
-        public ConfApplicationDTO ApplicationDTO { get; set; }
+        public ConfApplicationDraftDTO ApplicationDTO { get; set; }
     }
 }

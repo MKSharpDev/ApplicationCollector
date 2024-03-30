@@ -21,5 +21,11 @@ namespace ApplicationCollector.Infrastructure.Core.Implementations
             }
             return result.Entity;
         }
+        public async Task<T> GetAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var result = await _dbContext.Set<T>().GetAsync(id, cancellationToken); 
+            return result.Entity;
+        }
+
     }
 }
