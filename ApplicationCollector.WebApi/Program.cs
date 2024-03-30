@@ -23,7 +23,11 @@ builder.Services.AddDbContext<AppDbContext>(
 
 
 builder.Services.AddScoped<ISpeakerRepository, SpeakerRepository>();
+builder.Services.AddScoped<IConfApplicationDraftRepository, ConfApplicationDraftRepository>();
+
 builder.Services.AddScoped<ICreateSpeakerAppUseCase, CreateSpeakerAppUseCase>();
+builder.Services.AddScoped<IEditConfApplicationDraftUseCase, EditConfApplicationDraftUseCase>();
+
 
 var app = builder.Build();
 

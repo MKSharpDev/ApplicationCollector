@@ -15,13 +15,18 @@ namespace ApplicationCollector.Application.UseCases
 
         public async Task<SpeakerDTO> ExecuteAsync(SpeakerDTO authorDTO, CancellationToken cancellationToken)
         {
+
             //to do проверить наличие
+            //to do додлать activityInDb
+
+            var activityInDb = await activityRepository.GetAll().Where(a => authorDTO.Activity == a.Activity).FirstOrDefault;
             Speaker newAuthor = new Speaker()
             {
                 Id = authorDTO.Author,
                 Name = authorDTO.Name,
                 Description = authorDTO.Description,
                 Outline = authorDTO.Outline,
+                Activity = activityInDb,
                 ApplicationDraft = new ConfApplicationDraft
                 {
                     Author = authorDTO.ApplicationDTO.Author,
@@ -30,6 +35,7 @@ namespace ApplicationCollector.Application.UseCases
                     Id = authorDTO.ApplicationDTO.Id,
                     Outline = authorDTO.ApplicationDTO.Outline,
                     Time = DateTime.Now
+
                 }              
             };
             Speaker authorResult = await authorRepository.AddAsync(newAuthor, true, cancellationToken);

@@ -27,15 +27,20 @@ namespace ApplicationCollector.Application.UseCases
                 Description = confApplicationDraftDTO.Description,
                 Name = confApplicationDraftDTO.Name,
                 Outline = confApplicationDraftDTO.Outline,
-                Author = confApplicationDraftDTO.Author,
-                
+                Author = confApplicationDraftDTO.Author,               
             };
 
-            var result = await confApplicationDraftRepository.EditAsync(confApplicationDraftDTO, cancellationToken);
+            var editResult = await confApplicationDraftRepository.EditAsync(entityToChange, true, cancellationToken);
 
+            var resultDto = new ConfApplicationDraftDTO()
+            {
+                Description = editResult.Description,
+                Name = editResult.Name,
+                Outline = editResult.Outline,
+                Author = editResult.Author,
+            };
 
-            return null;
-
+            return resultDto;
         }
     }
     

@@ -11,20 +11,12 @@ namespace ApplicationCollector.WebApi.Controllers
     public class SpeakerController : Controller
     {
         private readonly ICreateSpeakerAppUseCase createAutorAppUseCase;
-        //private readonly IEditConfApplicationUseCase editConfAppUseCase;
 
         public SpeakerController(
-            ICreateSpeakerAppUseCase createAutorAppUseCase
-            //IEditConfApplicationUseCase editConfAppUseCase
+            ICreateSpeakerAppUseCase createAutorAppUseCas
             )
         {
             this.createAutorAppUseCase = createAutorAppUseCase;
-            //this.editConfAppUseCase = editConfAppUseCase;
-        }
-        [HttpGet]
-        public IActionResult TestAction()
-        {
-            return Ok("Ответ отправлен успешно...");
         }
 
         [HttpPost]
@@ -33,12 +25,6 @@ namespace ApplicationCollector.WebApi.Controllers
             var rezult = await createAutorAppUseCase.ExecuteAsync(authorDTO, HttpContext.RequestAborted);
             return Ok(rezult);
         }
-
-        //[HttpPut]
-        //public async Task<IActionResult> EditApplication(SpeakerDTO authorDTO)
-        //{
-        //    return Ok(await editConfAppUseCase.ExecuteAsync(authorDTO, HttpContext.RequestAborted));
-        //}
     }
 
 }
