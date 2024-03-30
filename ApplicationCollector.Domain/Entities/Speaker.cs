@@ -1,12 +1,13 @@
 ﻿namespace ApplicationCollector.Domain.Entities
 {
-    public class Speaker
+    public class Speaker: BaseEntity<Guid>
     {
-        public Guid Author { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? Outline { get; set; }
-        public Guid ApplicationId { get; set; }
-        public ConfApplicationDraft? Application { get; set; }
+        public Guid ApplicationDraftId { get; set; }
+        public ConfApplicationDraft? ApplicationDraft { get; set; }
+        public List<ConfApplication>? Applications { get; set; }
+
     }
 }

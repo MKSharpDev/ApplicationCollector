@@ -1,8 +1,10 @@
-﻿using ApplicationCollector.Infrastructure.Core.Interfaces;
+﻿using ApplicationCollector.Domain.Entities;
+using ApplicationCollector.Infrastructure.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCollector.Infrastructure.Core.Implementations
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T, U> : IRepository<T, U> where T : BaseEntity<U> where U : notnull
     {
         private readonly AppDbContext _dbContext;
 
@@ -23,9 +25,30 @@ namespace ApplicationCollector.Infrastructure.Core.Implementations
         }
         public async Task<T> GetAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var result = await _dbContext.Set<T>().GetAsync(id, cancellationToken); 
-            return result.Entity;
+            var result = await _dbContext.Set<T>().FindAsync(id, cancellationToken);
+            return result;
         }
 
+        public async Task DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var result = await _dbContext.Set<T>().FindAsync(id, cancellationToken);
+            if (result != null)
+            {
+                _dbContext.Set<T>().Remove(result);
+                await _dbContext.SaveChangesAsync(saveChanges, cancellationToken);
+            }
+        }
+        public async Task<T> EditAsync(T entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var getEntity = await _dbContext.Set<T>().FindAsync(entity.Id , cancellationToken);
+            if (getEntity != null)
+            {
+                _dbContext.Entry(entity).State = EntityState.Modified;
+
+                await _dbContext.SaveChangesAsync(saveChanges, cancellationToken);
+            }
+            var result = await _dbContext.Set<T>().FindAsync(entity.Id, cancellationToken);
+            return result;
+        }
     }
 }

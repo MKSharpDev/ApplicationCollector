@@ -1,6 +1,8 @@
-﻿namespace ApplicationCollector.Infrastructure.Core.Interfaces
+﻿using ApplicationCollector.Domain.Entities;
+
+namespace ApplicationCollector.Infrastructure.Core.Interfaces
 {
-    public interface IConfApplicationDraftRepository : IRepository<ConfApplicationDraft>
+    public interface IConfApplicationDraftRepository : IRepository<ConfApplicationDraft, Guid>
     {
     }
 }

@@ -3,7 +3,7 @@
 
 namespace ApplicationCollector.Infrastructure.Core.Interfaces
 {
-    public interface ISpeakerRepository : IRepository<Speaker>
+    public interface ISpeakerRepository : IRepository<Speaker, Guid>
     {
     }
 }

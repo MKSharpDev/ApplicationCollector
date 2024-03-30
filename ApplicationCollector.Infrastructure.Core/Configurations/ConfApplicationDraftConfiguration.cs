@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ApplicationCollector.Infrastructure.Core.Configurations
 {
-    public class ConfApplicationConfiguration : IEntityTypeConfiguration<ConfApplication>
+    public class ConfApplicationDraftConfiguration : IEntityTypeConfiguration<ConfApplicationDraft>
     {
-        public void Configure(EntityTypeBuilder<ConfApplication> builder)
+        public void Configure(EntityTypeBuilder<ConfApplicationDraft> builder)
         {
             builder.HasKey(s => s.Id);
 
             builder
                 .HasOne(a => a.Speaker)
-                .WithMany(s => s.Applications)
-                .HasForeignKey(a => a.Speaker);
+                .WithOne(s => s.ApplicationDraft)
+                .HasForeignKey<ConfApplicationDraft>(a => a.Author);
         }
     }
 }

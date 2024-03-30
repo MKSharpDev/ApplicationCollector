@@ -18,36 +18,34 @@ namespace ApplicationCollector.Application.UseCases
             //to do проверить наличие
             Speaker newAuthor = new Speaker()
             {
-                Author = authorDTO.Author,
+                Id = authorDTO.Author,
                 Name = authorDTO.Name,
                 Description = authorDTO.Description,
                 Outline = authorDTO.Outline,
-                Time = DateTime.Now,
-                IsReady = false,
-                Application = new ConfApplication
+                ApplicationDraft = new ConfApplicationDraft
                 {
                     Author = authorDTO.ApplicationDTO.Author,
                     Name = authorDTO.ApplicationDTO.Name,
                     Description = authorDTO.ApplicationDTO.Description,
                     Id = authorDTO.ApplicationDTO.Id,
-                    Outline = authorDTO.ApplicationDTO.Outline
-                }
-                
+                    Outline = authorDTO.ApplicationDTO.Outline,
+                    Time = DateTime.Now
+                }              
             };
-            Speaker authorResult = await authorRepository.AddAsync(newAuthor);
+            Speaker authorResult = await authorRepository.AddAsync(newAuthor, true, cancellationToken);
             SpeakerDTO authorResultDto = new SpeakerDTO()
             {
-                Author = authorResult.Author,
+                Author = authorResult.Id,
                 Outline = authorResult.Outline,
                 Name = authorResult.Name,
                 Description = authorResult.Description,
-                ApplicationDTO = new ConfApplicationDTO
+                ApplicationDTO = new ConfApplicationDraftDTO
                 {
-                    Author = authorResult.Application.Author,
-                    Name = authorResult.Application.Name,
-                    Description = authorResult.Application.Description,
-                    Id = authorResult.Application.Id,
-                    Outline = authorResult.Application.Outline
+                    Author = authorResult.ApplicationDraft.Author,
+                    Name = authorResult.ApplicationDraft.Name,
+                    Description = authorResult.ApplicationDraft.Description,
+                    Id = authorResult.ApplicationDraft.Id,
+                    Outline = authorResult.ApplicationDraft.Outline
                 }
             };
 
