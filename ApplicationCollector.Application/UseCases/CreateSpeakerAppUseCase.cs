@@ -22,6 +22,8 @@ namespace ApplicationCollector.Application.UseCases
                 Name = authorDTO.Name,
                 Description = authorDTO.Description,
                 Outline = authorDTO.Outline,
+                Time = DateTime.Now,
+                IsReady = false,
                 Application = new ConfApplication
                 {
                     Author = authorDTO.ApplicationDTO.Author,
