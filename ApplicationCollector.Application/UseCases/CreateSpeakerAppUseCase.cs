@@ -21,7 +21,16 @@ namespace ApplicationCollector.Application.UseCases
                 Author = authorDTO.Author,
                 Name = authorDTO.Name,
                 Description = authorDTO.Description,
-                Outline = authorDTO.Outline
+                Outline = authorDTO.Outline,
+                Application = new ConfApplication
+                {
+                    Author = authorDTO.ApplicationDTO.Author,
+                    Name = authorDTO.ApplicationDTO.Name,
+                    Description = authorDTO.ApplicationDTO.Description,
+                    Id = authorDTO.ApplicationDTO.Id,
+                    Outline = authorDTO.ApplicationDTO.Outline
+                }
+                
             };
             Speaker authorResult = await authorRepository.AddAsync(newAuthor);
             SpeakerDTO authorResultDto = new SpeakerDTO()
@@ -29,7 +38,15 @@ namespace ApplicationCollector.Application.UseCases
                 Author = authorResult.Author,
                 Outline = authorResult.Outline,
                 Name = authorResult.Name,
-                Description = authorResult.Description
+                Description = authorResult.Description,
+                ApplicationDTO = new ConfApplicationDTO
+                {
+                    Author = authorResult.Application.Author,
+                    Name = authorResult.Application.Name,
+                    Description = authorResult.Application.Description,
+                    Id = authorResult.Application.Id,
+                    Outline = authorResult.Application.Outline
+                }
             };
 
             return authorResultDto;

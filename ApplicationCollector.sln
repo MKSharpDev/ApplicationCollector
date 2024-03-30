@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationCollector.Applic
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationCollector.WebApi", "ApplicationCollector.WebApi\ApplicationCollector.WebApi.csproj", "{7499B1ED-67EF-4886-BB7D-C8EC3CDEE8CF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{40BE640B-0D65-4358-9802-911F44EAC07E} = {40BE640B-0D65-4358-9802-911F44EAC07E}
+		{4D6E78A6-2108-4F55-9F61-5C5B399CCFB9} = {4D6E78A6-2108-4F55-9F61-5C5B399CCFB9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
