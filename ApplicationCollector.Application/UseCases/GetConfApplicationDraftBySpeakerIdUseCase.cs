@@ -6,26 +6,29 @@ namespace ApplicationCollector.Application.UseCases
     public class GetConfApplicationDraftBySpeakerIdUseCase : IGetConfApplicationDraftBySpeakerIdUseCase
     {
         private readonly ISpeakerRepository authorRepository;
-        private readonly IConfActivityRepository confActivityRepository;
+        private readonly IConfApplicationDraftRepository confApplicationDraftRepository;
+
 
 
         public GetConfApplicationDraftBySpeakerIdUseCase(
             ISpeakerRepository authorRepository,
-            IConfActivityRepository confActivityRepository)
+            IConfApplicationDraftRepository confApplicationDraftRepository)
         {
             this.authorRepository = authorRepository;
-            this.confActivityRepository = confActivityRepository;
+            this.confApplicationDraftRepository = confApplicationDraftRepository;
         }
 
         public async Task<ConfApplicationDraftDTO> ExecuteAsync(Guid id, CancellationToken cancellationToken)
         {
 
             var speakerDto = await authorRepository.GetAsync(id, true, cancellationToken);
-
+            
             if (speakerDto == null)
             {
                 throw new Exception("Нет автора с таким id");
             }
+
+            speakerDto.ApplicationDraft = await confApplicationDraftRepository.GetAsync(speakerDto.ApplicationDraftId, true, cancellationToken);
 
             if (speakerDto.ApplicationDraft == null)
             {
@@ -38,7 +41,8 @@ namespace ApplicationCollector.Application.UseCases
                 Author = speakerDto.ApplicationDraft.Author,
                 Name = speakerDto.ApplicationDraft.Name,
                 Description = speakerDto.ApplicationDraft.Description,
-                Outline = speakerDto.ApplicationDraft.Outline
+                Outline = speakerDto.ApplicationDraft.Outline,
+                Activity = speakerDto.Activity
             };
 
             return result;

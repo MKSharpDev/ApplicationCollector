@@ -7,15 +7,12 @@ namespace ApplicationCollector.Application.UseCases
     public class CreateSpeakerAppUseCase : ICreateSpeakerAppUseCase
     {
         private readonly ISpeakerRepository authorRepository;
-        private readonly IConfActivityRepository confActivityRepository;
 
 
         public CreateSpeakerAppUseCase(
-            ISpeakerRepository authorRepository, 
-            IConfActivityRepository confActivityRepository)
+            ISpeakerRepository authorRepository) 
         {
             this.authorRepository = authorRepository;
-            this.confActivityRepository = confActivityRepository;
         }
 
         public async Task<SpeakerDTO> ExecuteAsync(SpeakerDTO authorDTO, CancellationToken cancellationToken)
@@ -28,12 +25,6 @@ namespace ApplicationCollector.Application.UseCases
                 throw new Exception("Aвтор с таким id уже зарегистрирован"); 
             }
 
-            var activityInDb = (await confActivityRepository.GetAllAsync()).Where(a => authorDTO.Activity == a.Activity).FirstOrDefault();
-            string activityName = "";
-            if ( activityInDb != null)
-            {
-                activityName = activityInDb.Activity;
-            }
               
             Speaker newAuthor = new Speaker()
             {
@@ -41,7 +32,7 @@ namespace ApplicationCollector.Application.UseCases
                 Name = authorDTO.Name,
                 Description = authorDTO.Description,
                 Outline = authorDTO.Outline,
-                Activity = activityInDb,
+                Activity = authorDTO.Activity,
                 ApplicationDraft = new ConfApplicationDraft
                 {
                     Author = authorDTO.ApplicationDTO.Author,
@@ -49,18 +40,13 @@ namespace ApplicationCollector.Application.UseCases
                     Description = authorDTO.ApplicationDTO.Description,
                     Id = authorDTO.ApplicationDTO.Id,
                     Outline = authorDTO.ApplicationDTO.Outline,
-                    Activity = activityName,
-                    Time = DateTime.Now
+                    Activity = authorDTO.Activity,
+                    Time = DateTime.Now.ToString()
 
                 }              
             };
 
             Speaker authorResult = await authorRepository.AddAsync(newAuthor, true, cancellationToken);
-            string activityRezultName = "";
-            if (authorResult.Activity != null)
-            {
-                activityRezultName = authorResult.Activity.Activity;
-            }
 
             SpeakerDTO authorResultDto = new SpeakerDTO()
             {
@@ -68,14 +54,14 @@ namespace ApplicationCollector.Application.UseCases
                 Outline = authorResult.Outline,
                 Name = authorResult.Name,
                 Description = authorResult.Description,
-                Activity = activityRezultName,
+                Activity = authorResult.Activity,
                 ApplicationDTO = new ConfApplicationDraftDTO
                 {
                     Author = authorResult.ApplicationDraft.Author,
                     Name = authorResult.ApplicationDraft.Name,
                     Description = authorResult.ApplicationDraft.Description,
                     Id = authorResult.ApplicationDraft.Id,
-                    Activity = activityRezultName,
+                    Activity = authorResult.Activity,
                     Outline = authorResult.ApplicationDraft.Outline
                 }
             };

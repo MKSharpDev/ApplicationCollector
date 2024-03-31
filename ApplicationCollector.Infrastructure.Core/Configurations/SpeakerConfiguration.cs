@@ -13,12 +13,11 @@ namespace ApplicationCollector.Infrastructure.Core.Configurations
             builder
                 .HasOne(s => s.ApplicationDraft)
                 .WithOne(a => a.Speaker)
-                .HasForeignKey<Speaker>(a => a.ApplicationDraftId);
+                .HasForeignKey<Speaker>(s => s.ApplicationDraftId);
 
             builder
                 .HasMany(s => s.Applications)
-                .WithOne(a => a.Speaker)
-                .HasForeignKey(a => a.Author);
+                .WithOne(a => a.Speaker);
         }
     }
 }

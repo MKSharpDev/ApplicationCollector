@@ -7,15 +7,14 @@ namespace ApplicationCollector.Infrastructure.Core
     public class AppDbContext : DbContext
     {
         public DbSet<Speaker> Authors { get; set; }
-        public DbSet<ConfApplicationDraft> ConfApplicationDrafts { get; set; }
         public DbSet<ConfApplication> ConfApplications { get; set; }
+        public DbSet<ConfApplicationDraft> ConfApplicationDrafts { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ConfApplicationDraftConfiguration());
             modelBuilder.ApplyConfiguration(new ConfApplicationConfiguration());
-            modelBuilder.ApplyConfiguration(new ConfActivityConfiguration());
             modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
 
             base.OnModelCreating(modelBuilder);

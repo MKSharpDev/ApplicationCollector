@@ -8,7 +8,7 @@
         public string? Outline { get; set; }
         public string? Activity { get; set; }
 
-        public DateTime Time { get; set; }
+        public string? Time { get; set; }
 
         public Speaker? Speaker { get; set; }
 
