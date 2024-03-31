@@ -21,28 +21,32 @@ namespace ApplicationCollector.Application.UseCases
         public async Task<ConfApplicationDraftDTO> ExecuteAsync(Guid id, CancellationToken cancellationToken)
         {
 
-            var speakerDto = await authorRepository.GetAsync(id, true, cancellationToken);
+            var speaker = await authorRepository.GetAsync(id, true, cancellationToken);
             
-            if (speakerDto == null)
+            if (speaker == null)
             {
                 throw new Exception("Нет автора с таким id");
             }
-
-            speakerDto.ApplicationDraft = await confApplicationDraftRepository.GetAsync(speakerDto.ApplicationDraftId, true, cancellationToken);
-
-            if (speakerDto.ApplicationDraft == null)
+            else if (speaker.ApplicationDraftInProgressId == null)
             {
                 throw new Exception("У автора нет заявки");
             }
 
+            var ApplicationDraft = await confApplicationDraftRepository.GetAsync(speaker.ApplicationDraftInProgressId, true, cancellationToken);
+
+            if (ApplicationDraft == null)
+            {
+                throw new Exception("Ошибка указателя заявки ");
+            }
+
             ConfApplicationDraftDTO result = new ConfApplicationDraftDTO()
             {
-                Id = speakerDto.ApplicationDraft.Id,
-                Author = speakerDto.ApplicationDraft.Author,
-                Name = speakerDto.ApplicationDraft.Name,
-                Description = speakerDto.ApplicationDraft.Description,
-                Outline = speakerDto.ApplicationDraft.Outline,
-                Activity = speakerDto.Activity
+                Id = ApplicationDraft.Id,
+                Author = ApplicationDraft.Author,
+                Name = ApplicationDraft.Name,
+                Description = ApplicationDraft.Description,
+                Outline = ApplicationDraft.Outline,
+                Activity = ApplicationDraft.Activity
             };
 
             return result;

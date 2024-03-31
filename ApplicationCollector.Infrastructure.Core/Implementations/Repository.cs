@@ -25,7 +25,7 @@ namespace ApplicationCollector.Infrastructure.Core.Implementations
         }
         public async Task<T> GetAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
-            var result = await _dbContext.Set<T>().FindAsync(id, cancellationToken);
+            var result = await _dbContext.Set<T>().FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
             return result;
         }
 
@@ -44,17 +44,13 @@ namespace ApplicationCollector.Infrastructure.Core.Implementations
                 await _dbContext.SaveChangesAsync(saveChanges, cancellationToken);
             }
         }
-        public async Task<T> EditAsync(T entity, bool saveChanges = true, CancellationToken cancellationToken = default)
+        public async Task EditAsync(T entity, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var getEntity = await _dbContext.Set<T>().FindAsync(entity.Id , cancellationToken);
             if (getEntity != null)
             {
-                _dbContext.Entry(entity).State = EntityState.Modified;
-
-                await _dbContext.SaveChangesAsync(saveChanges, cancellationToken);
+                _dbContext.Set<T>().Attach(entity);
             }
-            var result = await _dbContext.Set<T>().FindAsync(entity.Id, cancellationToken);
-            return result;
         }
     }
 }

@@ -11,14 +11,14 @@ namespace ApplicationCollector.Infrastructure.Core
         public DbSet<ConfApplicationDraft> ConfApplicationDrafts { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new ConfApplicationDraftConfiguration());
-            modelBuilder.ApplyConfiguration(new ConfApplicationConfiguration());
-            modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfiguration(new ConfApplicationDraftConfiguration());
+        //    modelBuilder.ApplyConfiguration(new ConfApplicationConfiguration());
+        //    modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
 
-            base.OnModelCreating(modelBuilder);
-        }
+        //    base.OnModelCreating(modelBuilder);
+        //}
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

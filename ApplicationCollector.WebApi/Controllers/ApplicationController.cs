@@ -9,6 +9,7 @@ namespace ApplicationCollector.WebApi.Controllers
 
     public class ApplicationController : Controller
     {
+        private readonly ICreateApplicationDraftAppUseCase сreateApplicationDraftAppUseCase;
         private readonly IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase;
         private readonly IEditConfApplicationDraftUseCase editConfAppDraftUseCase;
         private readonly IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase;
@@ -16,13 +17,23 @@ namespace ApplicationCollector.WebApi.Controllers
         public ApplicationController(
             IEditConfApplicationDraftUseCase editConfAppDraftUseCase,
             IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase,
-            IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase
+            IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase,
+            ICreateApplicationDraftAppUseCase сreateApplicationDraftAppUseCase
             )
         {
             this.getConfApplicationDraftUseCase = getConfApplicationDraftUseCase;
             this.editConfAppDraftUseCase = editConfAppDraftUseCase;
             this.deleteConfApplicationDraftUseCase = deleteConfApplicationDraftUseCase;
+            this.сreateApplicationDraftAppUseCase = сreateApplicationDraftAppUseCase;
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAutor(ConfApplicationDraftDTO appInDTO)
+        {
+            var rezult = await сreateApplicationDraftAppUseCase.ExecuteAsync(appInDTO, HttpContext.RequestAborted);
+            return Ok(rezult);
+        }
+
 
         [HttpGet]
         [Route("{id}")]

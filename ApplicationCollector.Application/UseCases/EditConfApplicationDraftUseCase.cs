@@ -36,10 +36,12 @@ namespace ApplicationCollector.Application.UseCases
                 Activity = confApplicationDraftDTO.Activity,
                 Id = confApplicationDraftDTO.Id,
                 Time = confAppDraftFromDb.Time,
-                Speaker = confAppDraftFromDb.Speaker
+                Speaker = speaker
             };
 
-            var editResult = await confApplicationDraftRepository.EditAsync(entityToChange, true, cancellationToken);
+            await confApplicationDraftRepository.EditAsync(entityToChange, true, cancellationToken);
+            var editResult = await confApplicationDraftRepository.GetAsync(entityToChange.Id);
+
 
             var resultDto = new ConfApplicationDraftDTO()
             {

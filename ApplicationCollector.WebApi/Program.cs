@@ -27,7 +27,7 @@ builder.Services.AddScoped<IConfApplicationDraftRepository, ConfApplicationDraft
 builder.Services.AddScoped<IConfApplicationRepository, ConfApplicationRepository>();
 
 
-builder.Services.AddScoped<ICreateSpeakerAppUseCase, CreateSpeakerAppUseCase>();
+builder.Services.AddScoped<ICreateApplicationDraftAppUseCase, CreateApplicationDraftAppUseCase>();
 builder.Services.AddScoped<IEditConfApplicationDraftUseCase, EditConfApplicationDraftUseCase>();
 builder.Services.AddScoped<IDeleteConfApplicationDraftUseCase, DeleteConfApplicationDraftUseCase>();
 builder.Services.AddScoped<IGetConfApplicationDraftUseCase, GetConfApplicationDraftUseCase>();

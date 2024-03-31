@@ -2,14 +2,8 @@
 {
     public class Speaker : BaseEntity<Guid>
     {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public string? Outline { get; set; }
-        public string? Activity { get; set; }
-
-        public Guid ApplicationDraftId { get; set; }
-        public ConfApplicationDraft? ApplicationDraft { get; set; }
+        public Guid ApplicationDraftInProgressId { get; set; }
+        public List<ConfApplicationDraft>? ApplicationDraft { get; set; }
         public List<ConfApplication>? Applications { get; set; }
-
     }
 }
