@@ -17,10 +17,10 @@ dotnet ef database update -s ApplicationCollector.WebApi -p ApplicationCollector
 app.db
 
 В connection указываем
-host - postgres
-maintenance database  - postgres
-user - postgres
-port - 5432
+host - postgres  /
+maintenance database  - postgres  /
+user - postgres  /
+port - 5432  /
 password - postgres
 
 При необходимости миграции:
