@@ -22,6 +22,19 @@ namespace ApplicationCollector.Application.UseCases
             ConfApplicationDraftForEditDTO confAppDraftForEditDTO, 
             CancellationToken cancellationToken)
         {
+            if (!String.IsNullOrEmpty(confAppDraftForEditDTO.Activity) && confAppDraftForEditDTO.Activity != "Report" && 
+                confAppDraftForEditDTO.Activity != "Masterclass" && confAppDraftForEditDTO.Activity != "Discussion")
+            {
+                throw new Exception("Активность должна быть типа - Report, Masterclass, Discussion");
+            }
+
+            bool notValid = String.IsNullOrEmpty(confAppDraftForEditDTO.Activity) && String.IsNullOrEmpty(confAppDraftForEditDTO.Name)
+                && String.IsNullOrEmpty(confAppDraftForEditDTO.Description) && String.IsNullOrEmpty(confAppDraftForEditDTO.Outline);
+
+            if (notValid)
+            {
+                throw new Exception("нельзя измениь заявку не указав хотя бы одно поле");
+            }
             var confAppDraftFromDb = await confApplicationDraftRepository.GetAsync(id, true, cancellationToken);
 
             if (confAppDraftFromDb == null)
