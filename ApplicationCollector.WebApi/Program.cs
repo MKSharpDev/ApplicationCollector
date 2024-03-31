@@ -32,6 +32,8 @@ builder.Services.AddScoped<IEditConfApplicationDraftUseCase, EditConfApplication
 builder.Services.AddScoped<IDeleteConfApplicationDraftUseCase, DeleteConfApplicationDraftUseCase>();
 builder.Services.AddScoped<IGetConfApplicationDraftUseCase, GetConfApplicationDraftUseCase>();
 builder.Services.AddScoped<IGetConfApplicationDraftBySpeakerIdUseCase, GetConfApplicationDraftBySpeakerIdUseCase>();
+builder.Services.AddScoped<ISubmitConfApplicationDraftUseCase, SubmitConfApplicationDraftUseCase>();
+
 
 
 var app = builder.Build();

@@ -13,18 +13,21 @@ namespace ApplicationCollector.WebApi.Controllers
         private readonly IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase;
         private readonly IEditConfApplicationDraftUseCase editConfAppDraftUseCase;
         private readonly IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase;
+        private readonly ISubmitConfApplicationDraftUseCase submitConfApplicationDraftUseCase;
 
         public ApplicationController(
             IEditConfApplicationDraftUseCase editConfAppDraftUseCase,
             IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase,
             IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase,
-            ICreateApplicationDraftAppUseCase сreateApplicationDraftAppUseCase
+            ICreateApplicationDraftAppUseCase сreateApplicationDraftAppUseCase,
+            ISubmitConfApplicationDraftUseCase submitConfApplicationDraftUseCase
             )
         {
             this.getConfApplicationDraftUseCase = getConfApplicationDraftUseCase;
             this.editConfAppDraftUseCase = editConfAppDraftUseCase;
             this.deleteConfApplicationDraftUseCase = deleteConfApplicationDraftUseCase;
             this.сreateApplicationDraftAppUseCase = сreateApplicationDraftAppUseCase;
+            this.submitConfApplicationDraftUseCase = submitConfApplicationDraftUseCase;
         }
 
         [HttpPost]
@@ -34,6 +37,13 @@ namespace ApplicationCollector.WebApi.Controllers
             return Ok(rezult);
         }
 
+        [HttpPost]
+        [Route("{id}/submit")]
+        public async Task<IActionResult> SubmitApplicationDraft([FromRoute] Guid id)
+        {
+            await submitConfApplicationDraftUseCase.ExecuteAsync(id, HttpContext.RequestAborted);
+            return Ok();
+        }
 
         [HttpGet]
         [Route("{id}")]
@@ -43,9 +53,10 @@ namespace ApplicationCollector.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditApplicationDraft(ConfApplicationDraftDTO confApplicationDraftDTO)
+        [Route("{id}")]
+        public async Task<IActionResult> EditApplicationDraft([FromRoute] Guid id, ConfApplicationDraftForEditDTO confApplicationDraftDTO)
         {
-            return Ok(await editConfAppDraftUseCase.ExecuteAsync(confApplicationDraftDTO, HttpContext.RequestAborted));
+            return Ok(await editConfAppDraftUseCase.ExecuteAsync(id, confApplicationDraftDTO, HttpContext.RequestAborted));
         }
 
         [HttpDelete]

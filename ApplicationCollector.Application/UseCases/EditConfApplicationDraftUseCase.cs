@@ -18,30 +18,32 @@ namespace ApplicationCollector.Application.UseCases
             this.authorRepository = authorRepository;
         }
 
-        public async Task<ConfApplicationDraftDTO> ExecuteAsync(ConfApplicationDraftDTO confApplicationDraftDTO, CancellationToken cancellationToken)
+        public async Task<ConfApplicationDraftDTO> ExecuteAsync(Guid id ,
+            ConfApplicationDraftForEditDTO confAppDraftForEditDTO, 
+            CancellationToken cancellationToken)
         {
-            var confAppDraftFromDb = await confApplicationDraftRepository.GetAsync(confApplicationDraftDTO.Id, true, cancellationToken);
+            var confAppDraftFromDb = await confApplicationDraftRepository.GetAsync(id, true, cancellationToken);
 
             if (confAppDraftFromDb == null)
             {
                 throw new Exception("Нет черновика заявки с таким id");
             }
-            var speaker = await authorRepository.GetAsync(confAppDraftFromDb.Author, true, cancellationToken);
+
             ConfApplicationDraft entityToChange = new ConfApplicationDraft() 
             {
-                Description = confApplicationDraftDTO.Description,
-                Name = confApplicationDraftDTO.Name,
-                Outline = confApplicationDraftDTO.Outline,
-                Author = confApplicationDraftDTO.Author,      
-                Activity = confApplicationDraftDTO.Activity,
-                Id = confApplicationDraftDTO.Id,
-                Time = confAppDraftFromDb.Time,
-                Speaker = speaker
+                Description = confAppDraftForEditDTO.Description,
+                Name = confAppDraftForEditDTO.Name,
+                Outline = confAppDraftForEditDTO.Outline,
+                Activity = confAppDraftForEditDTO.Activity,
+                Id = confAppDraftFromDb.Id,
+                Author = confAppDraftFromDb.Author,
+                Time = confAppDraftFromDb.Time
+
             };
 
-            await confApplicationDraftRepository.EditAsync(entityToChange, true, cancellationToken);
-            var editResult = await confApplicationDraftRepository.GetAsync(entityToChange.Id);
 
+            await confApplicationDraftRepository.DeleteAsync(id, true, cancellationToken);
+            var editResult = await confApplicationDraftRepository.AddAsync(entityToChange, true, cancellationToken);
 
             var resultDto = new ConfApplicationDraftDTO()
             {
@@ -49,7 +51,8 @@ namespace ApplicationCollector.Application.UseCases
                 Name = editResult.Name,
                 Outline = editResult.Outline,
                 Author = editResult.Author,
-                Activity = editResult.Activity
+                Activity = editResult.Activity,
+                Id = editResult.Id
             };
 
             return resultDto;

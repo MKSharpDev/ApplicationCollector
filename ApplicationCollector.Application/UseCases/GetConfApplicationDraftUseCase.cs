@@ -33,6 +33,7 @@ namespace ApplicationCollector.Application.UseCases
                 result.Author = confAppFromDb.Author;
                 result.Name = confAppFromDb.Name;
                 result.Description = confAppFromDb.Description;
+                result.Activity = confAppFromDb.Activity;
                 result.Outline = confAppFromDb.Outline;       
                 
             }
@@ -42,6 +43,7 @@ namespace ApplicationCollector.Application.UseCases
                 result.Author = confAppDraftFromDb.Author;
                 result.Name = confAppDraftFromDb.Name;
                 result.Description = confAppDraftFromDb.Description;
+                result.Activity = confAppDraftFromDb.Activity;
                 result.Outline = confAppDraftFromDb.Outline;
             }
 
