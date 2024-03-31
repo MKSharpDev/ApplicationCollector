@@ -2,6 +2,9 @@
 {
     public interface IEditConfApplicationDraftUseCase
     {
-        public Task<ConfApplicationDraftDTO> ExecuteAsync(ConfApplicationDraftDTO confApplicationDraftDTO, CancellationToken cancellationToken);
+        public Task<ConfApplicationDraftDTO> ExecuteAsync(
+            Guid id, 
+            ConfApplicationDraftForEditDTO confAppDraftForEditDTO,
+            CancellationToken cancellationToken);
     }
 }
