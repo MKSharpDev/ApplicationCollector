@@ -9,19 +9,18 @@ namespace ApplicationCollector.WebApi.Controllers
 
     public class ApplicationController : Controller
     {
-
         private readonly IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase;
         private readonly IEditConfApplicationDraftUseCase editConfAppDraftUseCase;
         private readonly IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase;
 
         public ApplicationController(
-            IEditConfApplicationDraftUseCase editConfAppUseCase,
+            IEditConfApplicationDraftUseCase editConfAppDraftUseCase,
             IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase,
             IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase
             )
         {
             this.getConfApplicationDraftUseCase = getConfApplicationDraftUseCase;
-            this.editConfAppDraftUseCase = editConfAppUseCase;
+            this.editConfAppDraftUseCase = editConfAppDraftUseCase;
             this.deleteConfApplicationDraftUseCase = deleteConfApplicationDraftUseCase;
         }
 
@@ -45,9 +44,6 @@ namespace ApplicationCollector.WebApi.Controllers
             await deleteConfApplicationDraftUseCase.ExecuteAsync(id, HttpContext.RequestAborted);
             return Ok("Черновик заявки удален");
         }
-
-
-
     }
 }
 

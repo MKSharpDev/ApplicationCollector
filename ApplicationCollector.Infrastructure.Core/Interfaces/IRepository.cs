@@ -8,5 +8,6 @@ namespace ApplicationCollector.Infrastructure.Core.Interfaces
         Task<T> GetAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
         Task DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default);
         Task<T> EditAsync(T entity, bool saveChanges = true, CancellationToken cancellationToken = default);
+        Task<List<T>> GetAllAsync(bool saveChanges = true, CancellationToken cancellationToken = default);
     }
 }
