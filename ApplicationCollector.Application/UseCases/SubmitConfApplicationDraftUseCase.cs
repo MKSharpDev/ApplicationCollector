@@ -27,7 +27,13 @@ namespace ApplicationCollector.Application.UseCases
             {
                 throw new Exception("Нет черновика заявки с таким id");
             }
+            bool notValid = String.IsNullOrEmpty(confAppDraftFromDb.Activity) || String.IsNullOrEmpty(confAppDraftFromDb.Name)
+                || String.IsNullOrEmpty(confAppDraftFromDb.Description) || String.IsNullOrEmpty(confAppDraftFromDb.Outline);
 
+            if (notValid)
+            {
+                throw new Exception("нельзя отправить заявку в которой есть не заполненные поля");
+            }
             var authorId = confAppDraftFromDb.Author;
 
             var appToSubmit = new ConfApplication

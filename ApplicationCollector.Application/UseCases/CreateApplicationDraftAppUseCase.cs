@@ -21,6 +21,23 @@ namespace ApplicationCollector.Application.UseCases
         public async Task<ConfApplicationDraftDTO> ExecuteAsync(ConfApplicationDraftDTO appInDTO, CancellationToken cancellationToken)
         {
 
+            if (appInDTO.Author == Guid.Empty)
+            {
+                throw new Exception("Нельзя создать заявку без указания автора");
+            }
+            if (!String.IsNullOrEmpty(appInDTO.Activity) && appInDTO.Activity != "Report" && 
+                appInDTO.Activity != "Masterclass" && appInDTO.Activity !="Discussion")
+            {
+                throw new Exception("Активность должна быть типа - Report, Masterclass, Discussion");
+            }
+            bool notValid = String.IsNullOrEmpty(appInDTO.Activity) && String.IsNullOrEmpty(appInDTO.Name)
+                && String.IsNullOrEmpty(appInDTO.Description) && String.IsNullOrEmpty(appInDTO.Outline);
+
+            if (notValid)
+            {
+                throw new Exception("нельзя создать заявку не указав хотя бы еще одно поле помимо идентификатора пользователя");
+            }
+
             var speakerInDb = await authorRepository.GetAsync(appInDTO.Author);
 
             if (speakerInDb == null)
