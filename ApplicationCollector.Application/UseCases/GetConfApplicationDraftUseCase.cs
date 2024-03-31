@@ -24,9 +24,9 @@ namespace ApplicationCollector.Application.UseCases
             if (confAppDraftFromDb == null)
             {
                 var confAppFromDb = await confApplicationRepository.GetAsync(id, true, cancellationToken);
-                if (confAppDraftFromDb == null)
+                if (confAppFromDb == null)
                 {
-                    throw new Exception("Нет черновика заявки с таким id");
+                    throw new Exception("Нет заявки с таким id");
                 }
 
                 result.Id = confAppFromDb.Id;

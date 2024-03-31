@@ -7,5 +7,4 @@
         public string? Description { get; set; }
         public string? Outline { get; set; }
     }
-
 }
