@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApplicationCollector.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/applications/")]
+    [Route("api/applications")]
 
     public class ApplicationController : Controller
     {
@@ -14,13 +14,18 @@ namespace ApplicationCollector.WebApi.Controllers
         private readonly IEditConfApplicationDraftUseCase editConfAppDraftUseCase;
         private readonly IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase;
         private readonly ISubmitConfApplicationDraftUseCase submitConfApplicationDraftUseCase;
+        private readonly IGetConfApplicationDraftByDateUseCase getConfApplicationDraftByDateUseCase;
+        private readonly IGetSubmitConfApplicationByDateUseCase getSubmitConfApplicationByDateUseCase;
+
 
         public ApplicationController(
             IEditConfApplicationDraftUseCase editConfAppDraftUseCase,
             IGetConfApplicationDraftUseCase getConfApplicationDraftUseCase,
             IDeleteConfApplicationDraftUseCase deleteConfApplicationDraftUseCase,
             ICreateApplicationDraftAppUseCase сreateApplicationDraftAppUseCase,
-            ISubmitConfApplicationDraftUseCase submitConfApplicationDraftUseCase
+            ISubmitConfApplicationDraftUseCase submitConfApplicationDraftUseCase,
+            IGetConfApplicationDraftByDateUseCase getConfApplicationDraftByDateUseCase,
+            IGetSubmitConfApplicationByDateUseCase getSubmitConfApplicationByDateUseCase
             )
         {
             this.getConfApplicationDraftUseCase = getConfApplicationDraftUseCase;
@@ -28,6 +33,8 @@ namespace ApplicationCollector.WebApi.Controllers
             this.deleteConfApplicationDraftUseCase = deleteConfApplicationDraftUseCase;
             this.сreateApplicationDraftAppUseCase = сreateApplicationDraftAppUseCase;
             this.submitConfApplicationDraftUseCase = submitConfApplicationDraftUseCase;
+            this.getConfApplicationDraftByDateUseCase = getConfApplicationDraftByDateUseCase;
+            this.getSubmitConfApplicationByDateUseCase = getSubmitConfApplicationByDateUseCase;
         }
 
         [HttpPost]
@@ -50,6 +57,20 @@ namespace ApplicationCollector.WebApi.Controllers
         public async Task<IActionResult> GetApplicationDraft([FromRoute] Guid id)
         {
             return Ok(await getConfApplicationDraftUseCase.ExecuteAsync(id, HttpContext.RequestAborted));
+        }
+
+        [HttpGet]
+        [Route("submittedAfter={date}")]
+        public async Task<IActionResult> GetSubmitApplicationByDate([FromRoute] string date)
+        {       
+            return Ok(await getSubmitConfApplicationByDateUseCase.ExecuteAsync(date, HttpContext.RequestAborted));
+        }
+
+        [HttpGet]
+        [Route("unsubmittedOlder={date}")]
+        public async Task<IActionResult> GetApplicationDraftByDate([FromRoute] string date)
+        {
+            return Ok(await getConfApplicationDraftByDateUseCase.ExecuteAsync(date, HttpContext.RequestAborted));
         }
 
         [HttpPut]
