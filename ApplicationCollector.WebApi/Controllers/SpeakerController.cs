@@ -1,5 +1,6 @@
 ﻿using ApplicationCollector.Application;
 using ApplicationCollector.Application.Interfaces;
+using ApplicationCollector.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationCollector.WebApi.Controllers
@@ -11,12 +12,15 @@ namespace ApplicationCollector.WebApi.Controllers
     public class SpeakerController : Controller
     {
         private readonly ICreateSpeakerAppUseCase createAutorAppUseCase;
+        private readonly IGetConfApplicationDraftBySpeakerIdUseCase getConfApplicationDraftBySpeakerIdUseCase;
 
         public SpeakerController(
-            ICreateSpeakerAppUseCase createAutorAppUseCas
+            ICreateSpeakerAppUseCase createAutorAppUseCase, 
+            IGetConfApplicationDraftBySpeakerIdUseCase getConfApplicationDraftBySpeakerIdUseCase
             )
         {
             this.createAutorAppUseCase = createAutorAppUseCase;
+            this.getConfApplicationDraftBySpeakerIdUseCase = getConfApplicationDraftBySpeakerIdUseCase;
         }
 
         [HttpPost]
@@ -25,6 +29,12 @@ namespace ApplicationCollector.WebApi.Controllers
             var rezult = await createAutorAppUseCase.ExecuteAsync(authorDTO, HttpContext.RequestAborted);
             return Ok(rezult);
         }
-    }
 
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetApplicationDraftBySpeakerId([FromRoute] Guid id)
+        {
+            return Ok(await getConfApplicationDraftBySpeakerIdUseCase.ExecuteAsync(id, HttpContext.RequestAborted));
+        }
+    }
 }

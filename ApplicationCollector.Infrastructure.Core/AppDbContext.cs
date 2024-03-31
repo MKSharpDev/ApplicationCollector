@@ -15,7 +15,7 @@ namespace ApplicationCollector.Infrastructure.Core
         {
             modelBuilder.ApplyConfiguration(new ConfApplicationDraftConfiguration());
             modelBuilder.ApplyConfiguration(new ConfApplicationConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ConfActivityConfiguration());
             modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
 
             base.OnModelCreating(modelBuilder);

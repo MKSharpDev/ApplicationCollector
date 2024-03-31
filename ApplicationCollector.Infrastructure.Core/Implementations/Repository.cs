@@ -29,6 +29,12 @@ namespace ApplicationCollector.Infrastructure.Core.Implementations
             return result;
         }
 
+        public async Task<List<T>> GetAllAsync(bool saveChanges = true, CancellationToken cancellationToken = default)
+        {
+            var result = await _dbContext.Set<T>().ToListAsync();
+            return result;
+        }
+
         public async Task DeleteAsync(Guid id, bool saveChanges = true, CancellationToken cancellationToken = default)
         {
             var result = await _dbContext.Set<T>().FindAsync(id, cancellationToken);

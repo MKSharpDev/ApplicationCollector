@@ -48,7 +48,4 @@ namespace ApplicationCollector.Application.UseCases
             return result;
         }
     }
-
-    
-
 }

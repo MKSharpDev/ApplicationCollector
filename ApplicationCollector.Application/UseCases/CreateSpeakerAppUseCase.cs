@@ -7,19 +7,34 @@ namespace ApplicationCollector.Application.UseCases
     public class CreateSpeakerAppUseCase : ICreateSpeakerAppUseCase
     {
         private readonly ISpeakerRepository authorRepository;
+        private readonly IConfActivityRepository confActivityRepository;
 
-        public CreateSpeakerAppUseCase(ISpeakerRepository authorRepository)
+
+        public CreateSpeakerAppUseCase(
+            ISpeakerRepository authorRepository, 
+            IConfActivityRepository confActivityRepository)
         {
             this.authorRepository = authorRepository;
+            this.confActivityRepository = confActivityRepository;
         }
 
         public async Task<SpeakerDTO> ExecuteAsync(SpeakerDTO authorDTO, CancellationToken cancellationToken)
         {
 
-            //to do проверить наличие
-            //to do додлать activityInDb
+            var speakerInDb = await authorRepository.GetAsync(authorDTO.Author);
 
-            var activityInDb = await activityRepository.GetAll().Where(a => authorDTO.Activity == a.Activity).FirstOrDefault;
+            if (speakerInDb != null)
+            {
+                throw new Exception("Aвтор с таким id уже зарегистрирован"); 
+            }
+
+            var activityInDb = (await confActivityRepository.GetAllAsync()).Where(a => authorDTO.Activity == a.Activity).FirstOrDefault();
+            string activityName = "";
+            if ( activityInDb != null)
+            {
+                activityName = activityInDb.Activity;
+            }
+              
             Speaker newAuthor = new Speaker()
             {
                 Id = authorDTO.Author,
@@ -34,29 +49,38 @@ namespace ApplicationCollector.Application.UseCases
                     Description = authorDTO.ApplicationDTO.Description,
                     Id = authorDTO.ApplicationDTO.Id,
                     Outline = authorDTO.ApplicationDTO.Outline,
+                    Activity = activityName,
                     Time = DateTime.Now
 
                 }              
             };
+
             Speaker authorResult = await authorRepository.AddAsync(newAuthor, true, cancellationToken);
+            string activityRezultName = "";
+            if (authorResult.Activity != null)
+            {
+                activityRezultName = authorResult.Activity.Activity;
+            }
+
             SpeakerDTO authorResultDto = new SpeakerDTO()
             {
                 Author = authorResult.Id,
                 Outline = authorResult.Outline,
                 Name = authorResult.Name,
                 Description = authorResult.Description,
+                Activity = activityRezultName,
                 ApplicationDTO = new ConfApplicationDraftDTO
                 {
                     Author = authorResult.ApplicationDraft.Author,
                     Name = authorResult.ApplicationDraft.Name,
                     Description = authorResult.ApplicationDraft.Description,
                     Id = authorResult.ApplicationDraft.Id,
+                    Activity = activityRezultName,
                     Outline = authorResult.ApplicationDraft.Outline
                 }
             };
 
             return authorResultDto;
-
         }
     }
 }
