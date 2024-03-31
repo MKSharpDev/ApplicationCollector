@@ -1,12 +1,11 @@
 ﻿using ApplicationCollector.Domain.Entities;
 using ApplicationCollector.Infrastructure.Core.Interfaces;
 
-
 namespace ApplicationCollector.Infrastructure.Core.Implementations
 {
-    public class SpeakerRepository : Repository<Speaker, Guid>, ISpeakerRepository
+    public class ConfApplicationRepository : Repository<ConfApplication,Guid> , IConfApplicationRepository
     {
-        public SpeakerRepository(AppDbContext appDbContext) : base(appDbContext)
+        public ConfApplicationRepository(AppDbContext appDbContext) : base(appDbContext)
         { }
     }
 }

@@ -13,8 +13,8 @@ namespace ApplicationCollector.Infrastructure.Core.Configurations
 
             builder
                 .HasOne(a => a.Speaker)
-                .WithOne(s => s.Application)
-                .HasForeignKey<ConfApplication>(a => a.Author);
+                .WithMany(s => s.Applications)
+                .HasForeignKey(a => a.Author);
         }
     }
 }

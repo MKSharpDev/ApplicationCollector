@@ -1,44 +1,30 @@
 ﻿using ApplicationCollector.Application;
 using ApplicationCollector.Application.Interfaces;
+using ApplicationCollector.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationCollector.WebApi.Controllers
 {
 
     [ApiController]
-    [Route("api/speakers")]
+    [Route("api/users")]
 
     public class SpeakerController : Controller
     {
-        private readonly ICreateSpeakerAppUseCase createAutorAppUseCase;
-        //private readonly IEditConfApplicationUseCase editConfAppUseCase;
+       
+        private readonly IGetConfApplicationDraftBySpeakerIdUseCase getConfApplicationDraftBySpeakerIdUseCase;
 
-        public SpeakerController(
-            ICreateSpeakerAppUseCase createAutorAppUseCase
-            //IEditConfApplicationUseCase editConfAppUseCase
-            )
+        public SpeakerController(IGetConfApplicationDraftBySpeakerIdUseCase getConfApplicationDraftBySpeakerIdUseCase)
         {
-            this.createAutorAppUseCase = createAutorAppUseCase;
-            //this.editConfAppUseCase = editConfAppUseCase;
+            this.getConfApplicationDraftBySpeakerIdUseCase = getConfApplicationDraftBySpeakerIdUseCase;
         }
+
+ 
         [HttpGet]
-        public IActionResult TestAction()
+        [Route("{id}")]
+        public async Task<IActionResult> GetApplicationDraftBySpeakerId([FromRoute] Guid id)
         {
-            return Ok("Ответ отправлен успешно...");
+            return Ok(await getConfApplicationDraftBySpeakerIdUseCase.ExecuteAsync(id, HttpContext.RequestAborted));
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateAutor(SpeakerDTO authorDTO)
-        {
-            var rezult = await createAutorAppUseCase.ExecuteAsync(authorDTO, HttpContext.RequestAborted);
-            return Ok(rezult);
-        }
-
-        //[HttpPut]
-        //public async Task<IActionResult> EditApplication(SpeakerDTO authorDTO)
-        //{
-        //    return Ok(await editConfAppUseCase.ExecuteAsync(authorDTO, HttpContext.RequestAborted));
-        //}
     }
-
 }

@@ -8,14 +8,17 @@ namespace ApplicationCollector.Infrastructure.Core
     {
         public DbSet<Speaker> Authors { get; set; }
         public DbSet<ConfApplication> ConfApplications { get; set; }
+        public DbSet<ConfApplicationDraft> ConfApplicationDrafts { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new ConfApplicationConfiguration());
-            modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
 
-            base.OnModelCreating(modelBuilder);
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfiguration(new ConfApplicationDraftConfiguration());
+        //    modelBuilder.ApplyConfiguration(new ConfApplicationConfiguration());
+        //    modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
