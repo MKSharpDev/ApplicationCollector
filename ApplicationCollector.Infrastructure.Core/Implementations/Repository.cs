@@ -1,6 +1,7 @@
 ﻿using ApplicationCollector.Domain.Entities;
 using ApplicationCollector.Infrastructure.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace ApplicationCollector.Infrastructure.Core.Implementations
 {
@@ -49,7 +50,10 @@ namespace ApplicationCollector.Infrastructure.Core.Implementations
             var getEntity = await _dbContext.Set<T>().FindAsync(entity.Id , cancellationToken);
             if (getEntity != null)
             {
-                _dbContext.Set<T>().Attach(entity);
+
+                _dbContext.Set<T>().Entry(getEntity).State = EntityState.Detached;
+                _dbContext.Set<T>().Update(entity);
+                await _dbContext.SaveChangesAsync(saveChanges, cancellationToken);
             }
         }
     }
