@@ -10,6 +10,7 @@ dotnet ef database update -s ApplicationCollector.WebApi -p ApplicationCollector
 
 Через студию запускается проект ApplicationCollector.WebApi , 
 либо из папки ApplicationCollector.WebApi  команда dotnet run
+
 Если необходим pgAdmin:
 
 Заходим http://localhost/browser/
