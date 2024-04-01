@@ -3,7 +3,7 @@ cd .\ApplicationCollector.WebApi
 
 Запусакаем докер:
 docker compose up -d
-выходим в копрень проекта: cd..
+выходим в корень проекта: cd..
 
 Запусакаем обновление БД:
 dotnet ef database update -s ApplicationCollector.WebApi -p ApplicationCollector.Infrastructure.Core
