@@ -1,5 +1,4 @@
 ﻿using ApplicationCollector.Domain.Entities;
-using ApplicationCollector.Infrastructure.Core.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCollector.Infrastructure.Core
