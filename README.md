@@ -26,3 +26,4 @@ password - postgres
 При необходимости миграции:
 dotnet ef migrations add InitialCreate -s ApplicationCollector.WebApi -p ApplicationCollector.Infrastructure.Core
 
+Для поиска по дате:  формат   мм-дд-гггг чч:мм:сс
