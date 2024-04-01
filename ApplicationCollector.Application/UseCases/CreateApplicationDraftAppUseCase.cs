@@ -77,10 +77,8 @@ namespace ApplicationCollector.Application.UseCases
 
 
             speakerInDb.ApplicationDraftInProgressId = appRezult.Id;
-            await authorRepository.DeleteAsync(speakerInDb.Id, true, cancellationToken);
-            await authorRepository.AddAsync(speakerInDb, true, cancellationToken);
 
-            //await authorRepository.EditAsync(speakerInDb, true, cancellationToken);
+            await authorRepository.EditAsync(speakerInDb, true, cancellationToken);
 
 
 

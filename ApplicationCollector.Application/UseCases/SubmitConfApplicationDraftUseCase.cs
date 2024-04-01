@@ -56,8 +56,7 @@ namespace ApplicationCollector.Application.UseCases
                 ApplicationDraftInProgressId = Guid.Empty
             };
 
-            await authorRepository.DeleteAsync(authorId, true, cancellationToken);
-            await authorRepository.AddAsync(authorToEdit, true, cancellationToken);
+            await authorRepository.EditAsync(authorToEdit, true, cancellationToken);
         }
     }
 }

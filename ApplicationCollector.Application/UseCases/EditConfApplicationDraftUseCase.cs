@@ -55,8 +55,9 @@ namespace ApplicationCollector.Application.UseCases
             };
 
 
-            await confApplicationDraftRepository.DeleteAsync(id, true, cancellationToken);
-            var editResult = await confApplicationDraftRepository.AddAsync(entityToChange, true, cancellationToken);
+            await confApplicationDraftRepository.EditAsync(entityToChange, true, cancellationToken);
+
+            var editResult = await confApplicationDraftRepository.GetAsync(id, true, cancellationToken);
 
             var resultDto = new ConfApplicationDraftDTO()
             {
