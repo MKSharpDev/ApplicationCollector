@@ -8,6 +8,8 @@ docker compose up -d
 Запусакаем обновление БД:
 dotnet ef database update -s ApplicationCollector.WebApi -p ApplicationCollector.Infrastructure.Core
 
+Через студию запускается проект ApplicationCollector.WebApi , 
+либо из папки ApplicationCollector.WebApi  команда dotnet run
 Если необходим pgAdmin:
 
 Заходим http://localhost/browser/
@@ -27,3 +29,4 @@ password - postgres
 dotnet ef migrations add InitialCreate -s ApplicationCollector.WebApi -p ApplicationCollector.Infrastructure.Core
 
 Для поиска по дате:  формат   мм-дд-гггг чч:мм:сс
+
